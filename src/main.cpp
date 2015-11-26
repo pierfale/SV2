@@ -17,8 +17,9 @@ int main() {
 	r1.add_product(1, c);
 
 	Reaction r2(0.5f);
-	r1.add_reactant(1, c);
-	r1.add_product(1, d);
+	r2.add_reactant(1, a);
+	r2.add_reactant(1, c);
+	r2.add_product(1, d);
 
 	System s;
 
@@ -27,7 +28,7 @@ int main() {
 
 	// initial species number
 	std::map<Species, unsigned int> init_species_number;
-	init_species_number[a] = 100;
+	init_species_number[a] = 150;
 	init_species_number[b] = 50;
 	init_species_number[c] = 10;
 	init_species_number[d] = 0;

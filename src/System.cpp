@@ -62,21 +62,29 @@ void System::simulate(float max_time, const std::map<Species, unsigned int>& spe
 		float rand_pointer = ((float)rand()/std::numeric_limits<int>::max())*sum_a_h;
 		float sum = 0;
 		unsigned int i;
-		for(i=0; i<h.size(); i++) {
-			sum += h[i]*a[i];
+		for(i=0;; i++) {
+			if(h[i]*a[i] == 0)
+				continue;
 
-			if(rand_pointer <= sum)
+			sum += h[i]*a[i];
+			std::cout << rand_pointer << "-" << sum << std::endl;
+
+			if(rand_pointer < sum || i == h.size())
 				break;
 		}
 
-		// State
-		Reaction& current_reaction = _reactions[i];
 
+
+		// State
+		std::cout << "Current time : " << current_time << ", reaction : " << i << " (total :" << sum_a_h << ")" << std::endl;
+		Reaction& current_reaction = _reactions[i];
 		for(const auto& reactant : current_reaction.reactants()) {
+			std::cout << "-> - " << reactant.first.name() << std::endl;
 			current_species_number[reactant.first] -= reactant.second;
 		}
 
 		for(const auto& product: current_reaction.products()) {
+			std::cout << "-> + " << product.first.name() << std::endl;
 			current_species_number[product.first] += product.second;
 		}
 

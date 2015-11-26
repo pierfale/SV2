@@ -1,4 +1,5 @@
 #include "Log.h"
+#include <iostream>
 
 Log::Log() {
 
@@ -6,6 +7,11 @@ Log::Log() {
 
 void Log::add(float time, const std::map<Species, unsigned int>& species_number) {
 	_events.push_back(std::pair<float, std::map<Species, unsigned int>>(time, species_number));
+
+	for(const auto& s : species_number) {
+		std::cout << s.first.name() << ":" << s.second << " ";
+	}
+	std::cout << std::endl;
 }
 
 void Log::save_to_file(const std::string& filename) {
@@ -15,7 +21,7 @@ void Log::save_to_file(const std::string& filename) {
 		throw std::runtime_error("Unable to open "+filename);
 
 	// Header
-	file << "Time";
+	file << "#Time";
 	for(const auto& species_number : _events[0].second) {
 		file << "," << species_number.first.name();
 	}
