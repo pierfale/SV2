@@ -33,4 +33,4 @@ file(
     src/*
 )
 
-add_executable(TP2 ${include_files} ${src_files})
+add_executable(Simulate ${include_files} ${src_files})

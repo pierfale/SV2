@@ -42,7 +42,7 @@ void System::simulate(float max_time, const std::map<Species, unsigned int>& spe
 		for(const Reaction& reaction : _reactions) {
 			unsigned int current_h = 1;
 			for(const auto& reactant : reaction.reactants()) {
-				current_h *= current_species_number[reactant.first];
+				current_h *= current_species_number[reactant.first]/reactant.second;
 			}
 
 			a.push_back(reaction.speed());
@@ -67,7 +67,6 @@ void System::simulate(float max_time, const std::map<Species, unsigned int>& spe
 				continue;
 
 			sum += h[i]*a[i];
-			std::cout << rand_pointer << "-" << sum << std::endl;
 
 			if(rand_pointer < sum || i == h.size())
 				break;
@@ -76,20 +75,19 @@ void System::simulate(float max_time, const std::map<Species, unsigned int>& spe
 
 
 		// State
-		std::cout << "Current time : " << current_time << ", reaction : " << i << " (total :" << sum_a_h << ")" << std::endl;
 		Reaction& current_reaction = _reactions[i];
 		for(const auto& reactant : current_reaction.reactants()) {
-			std::cout << "-> - " << reactant.first.name() << std::endl;
 			current_species_number[reactant.first] -= reactant.second;
 		}
 
 		for(const auto& product: current_reaction.products()) {
-			std::cout << "-> + " << product.first.name() << std::endl;
 			current_species_number[product.first] += product.second;
 		}
 
 		logger.add(current_time, current_species_number);
 	}
+
+	std::cout << "End of simulation" << std::endl;
 
 
 

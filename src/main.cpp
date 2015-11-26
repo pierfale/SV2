@@ -12,7 +12,7 @@ int main() {
 
 
 	Reaction r1(1.f);
-	r1.add_reactant(1, a);
+	r1.add_reactant(2, a);
 	r1.add_reactant(1, b);
 	r1.add_product(1, c);
 
@@ -34,7 +34,7 @@ int main() {
 	init_species_number[d] = 0;
 
 	Log logger;
-	s.simulate(10.0f, init_species_number, logger);
+	s.simulate(20.0f, init_species_number, logger);
 
 	logger.save_to_file("result.csv");
 
